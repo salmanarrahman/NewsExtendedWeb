@@ -36,7 +36,7 @@ if($num >0 ){
 
         $post_item = array (
             'id' => $id,
-            'dateID' => $dateID,
+            'dateid' => $dateid,
             'headline' => $headline,
             'reporter' => $reporter,
             'news' => $news,
@@ -58,22 +58,6 @@ if($num >0 ){
         array('message' => 'No post found')
     ) ;
 }
-
-/*
-$post->getDataByDate();
-
-$post_arr = array (
-    'id' => $post->id,
-    'dateID' => $post->dateID,
-    'headline' => $post->headline,
-    'reporter' => $post->reporter,
-    'news' => $post->news,
-    'thumbnail' => $post->thumbnail
-);
-
-//convert into json
-
-print_r(json_encode($post_arr)); */
 
 
 ?>

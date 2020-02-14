@@ -3,7 +3,6 @@
 class post{
 
   private $conn;
-  private $table = 'dates';
 
    public $dateID;
 
@@ -13,7 +12,7 @@ class post{
 
      public function breakingNews(){
       try{
-        $query = 'SELECT * FROM breakingnew WHERE dateID = :dateID';
+        $query = 'SELECT * FROM breakingnews WHERE dateID = :dateID';
         //prepare statement
         $statement = $this->conn->prepare($query);
         $this->dateID = htmlspecialchars(strip_tags($this->dateID));
@@ -34,12 +33,37 @@ class post{
     }
         return $statement;
      
+    }
+
+
+    public function videos(){
+      try{
+        $query = 'SELECT * FROM video WHERE dateID = :dateID';
+        //prepare statement
+        $statement = $this->conn->prepare($query);
+        $this->dateID = htmlspecialchars(strip_tags($this->dateID));
+        $statement->bindParam(":dateID",$this->dateID);
+
+        if ($statement->execute()) {
+          # code...
+          return $statement;
+        }
+        printf("Error: %s. \n",$statement->error);
+
+        return false;
+
+
+      }catch(PDOException $e)
+    {
+      echo "could not connect to table " . $e->getMessage() ;
+    }
+        return $statement;     
     }
 
     
     public function trending(){
       try{
-        $query = 'SELECT * FROM trending WHERE dateID = :dateID';
+        $query = 'SELECT * FROM trendingnews WHERE dateID = :dateID';
         //prepare statement
         $statement = $this->conn->prepare($query);
         $this->dateID = htmlspecialchars(strip_tags($this->dateID));
@@ -58,10 +82,7 @@ class post{
     {
       echo "could not connect to table " . $e->getMessage() ;
     }
-        return $statement;
-
-
-     
+        return $statement;     
     }
 
   public function readDate(){
@@ -86,7 +107,7 @@ class post{
 
   public function categorywiseNews(){
     try{
-      $query = 'SELECT * FROM categorynews WHERE dateID = :dateID';
+      $query = 'SELECT * FROM categorywisenews WHERE dateID = :dateID';
       //prepare statement
       $statement = $this->conn->prepare($query);
       $this->dateID = htmlspecialchars(strip_tags($this->dateID));
@@ -105,10 +126,25 @@ class post{
   {
     echo "could not connect to table " . $e->getMessage() ;
   }
-      return $statement;
+      return $statement;   
+  }
 
+  public function category(){
+
+    try
+    {
+         $query = 'SELECT  * FROM categories';
+         $statement = $this->conn->query($query);
+
+    }catch(PDOException $e){
+      echo "could not connect to table".$e->getMessage() ;
+    }
 
    
+
+    return $statement;    
+
+
   }
 
 

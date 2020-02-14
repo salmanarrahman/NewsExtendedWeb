@@ -11,9 +11,7 @@ include 'post.php';
 $database = new database();
 $db = $database->connect();
 
-//
 $post = new post($db);
-
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -21,14 +19,14 @@ $post->dateID = $data->dateID;
 
 //get post 
 
-$result = $post->categorywiseNews();
+$result = $post->videos();
 $num = $result->rowCount();
 
 if($num >0 ){
 
     //post array
     $post_arr = array();
-    $post_arr['data'] = array();
+    $post_arr['videos'] = array();
 
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
 
@@ -36,17 +34,17 @@ if($num >0 ){
 
         $post_item = array (
             'id' => $id,
-            'dateid' => $dateid,
-            'headline' => $headline,
-            'reporter' => $reporter,
+            'videoaddress' => $videoaddress,
+            'title' => $title,
+            'cameraman' => $cameraman,
             'news' => $news,
-            'categoryid'=>$categoryid,
-            'thumbnail' => $thumbnail
+            'thumbnail' => $thumbnail,
+            'dateid' => $dateid
         );
 
         //push data
 
-        array_push($post_arr['data'],$post_item);
+        array_push($post_arr['videos'],$post_item);
 
     }
 
@@ -59,4 +57,8 @@ if($num >0 ){
         array('message' => 'No post found')
     ) ;
 }
+
+
+
+
 ?>

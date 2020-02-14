@@ -11,9 +11,7 @@ include 'post.php';
 $database = new database();
 $db = $database->connect();
 
-//
 $post = new post($db);
-
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -36,7 +34,7 @@ if($num >0 ){
 
         $post_item = array (
             'id' => $id,
-            'dateID' => $dateID,
+            'dateid' => $dateid,
             'headline' => $headline,
             'reporter' => $reporter,
             'news' => $news,

@@ -1,30 +1,22 @@
 <?php 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-with');
 
 include 'database.php';
 include 'post.php';
 
 //db connect
-$database = new database();
+$database = new Database();
+
 $db = $database->connect();
 
-//
 $post = new post($db);
 
-
-$data = json_decode(file_get_contents("php://input"));
-
-$post->dateID = $data->dateID;
-
-//get post 
-
-$result = $post->categorywiseNews();
+//blog post query
+$result = $post->category();
 $num = $result->rowCount();
 
-if($num >0 ){
+if($num >0){
 
     //post array
     $post_arr = array();
@@ -35,13 +27,8 @@ if($num >0 ){
         extract($row);
 
         $post_item = array (
-            'id' => $id,
-            'dateid' => $dateid,
-            'headline' => $headline,
-            'reporter' => $reporter,
-            'news' => $news,
-            'categoryid'=>$categoryid,
-            'thumbnail' => $thumbnail
+            'categoryid' => $categoryid,
+            'category' => $category
         );
 
         //push data
@@ -59,4 +46,5 @@ if($num >0 ){
         array('message' => 'No post found')
     ) ;
 }
+
 ?>
